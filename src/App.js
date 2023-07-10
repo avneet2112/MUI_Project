@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useEffect } from 'react';
+import { adminDetails } from './constants';
+import AdminDashboard from './components/adminDashboard';
+const theme = createTheme({
+  palette: {
+    success: {
+      main: '#8A4FFF',
+    },
+    warning: {
+      main: '#FFD700',
+    },
+  },
+  typography: {
+    fontFamily: 'Inter',
+  },
+});
 function App() {
+  useEffect(() => {
+    localStorage.setItem('adminDetails', JSON.stringify(adminDetails));
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Routes>
+          <Route exact path='/' element={<AdminDashboard />}></Route>
+          {/* <Route exact path='/about' element={<About />}></Route>
+          <Route exact path='/contact' element={<Contact />}></Route> */}
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
 
